@@ -18,7 +18,7 @@ const UploadModal = () => {
   const { user } = useUser();
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
-  console.log(user);
+  // console.log(user);
 
   // 使用了react-hook-form来快速创建form
   const { register, handleSubmit, reset } = useForm<FieldValues>({
