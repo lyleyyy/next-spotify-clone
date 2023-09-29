@@ -2,10 +2,25 @@
 import React from "react";
 import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
 
 const Library = () => {
+  const authModal = useAuthModal();
+  const upLoadModal = useUploadModal();
+  const { user, subscription } = useUser();
+
   const onClick = () => {
-    // Handle upload later
+    // 如果没登录，那点击上传歌曲，应该先登录
+    if (!user) {
+      return authModal.onOpen();
+    }
+
+    //TODO: check for subscription
+
+    // 已登陆，则可以打开上传界面
+    return upLoadModal.onOpen();
   };
 
   return (

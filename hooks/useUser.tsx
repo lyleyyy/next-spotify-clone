@@ -31,9 +31,11 @@ export const MyUserContextProvider = (props: Props) => {
 
   const user = useSupaUser();
   const accessToken = session?.access_token ?? null;
+
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+
   const getUserDetails = () => supabase.from("user").select("*").single();
   const getSubscription = () =>
     supabase
