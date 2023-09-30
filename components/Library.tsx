@@ -7,6 +7,7 @@ import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
 import { Song } from "@/types";
 import MediaItem from "./MediaItem";
+import useOnPlay from "@/hooks/useOnPlayer";
 
 interface LibraryProps {
   songs: Song[];
@@ -16,6 +17,8 @@ const Library = ({ songs }: LibraryProps) => {
   const authModal = useAuthModal();
   const upLoadModal = useUploadModal();
   const { user, subscription } = useUser();
+
+  const onPlay = useOnPlay(songs);
 
   const onClick = () => {
     // 如果没登录，那点击上传歌曲，应该先登录
@@ -44,7 +47,13 @@ const Library = ({ songs }: LibraryProps) => {
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
         {songs.map((song) => (
-          <MediaItem key={song.id} data={song} onClick={() => {}} />
+          <MediaItem
+            key={song.id}
+            data={song}
+            onClick={(id: string) => {
+              onPlay(id);
+            }}
+          />
         ))}
       </div>
     </div>
