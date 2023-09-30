@@ -7,13 +7,15 @@ import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
 import { Song } from "@/types";
 import MediaItem from "./MediaItem";
-import useOnPlay from "@/hooks/useOnPlayer";
+import useOnPlay from "@/hooks/useOnPlay";
+import useSubscribeModal from "@/hooks/useSubscribeModal";
 
 interface LibraryProps {
   songs: Song[];
 }
 
 const Library = ({ songs }: LibraryProps) => {
+  const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const upLoadModal = useUploadModal();
   const { user, subscription } = useUser();
@@ -26,7 +28,9 @@ const Library = ({ songs }: LibraryProps) => {
       return authModal.onOpen();
     }
 
-    //TODO: check for subscription
+    if (!subscription) {
+      return subscribeModal.onOpen();
+    }
 
     // 已登陆，则可以打开上传界面
     return upLoadModal.onOpen();
